@@ -1,4 +1,4 @@
-import useSpeechRec from "../hooks/speechRec";
+import useSpeechRecognition from "../hooks/useSpeechRecognition";
 
 const Main = () => {
 
@@ -8,10 +8,25 @@ const Main = () => {
         stopListening,
         isListening,
         hasRecognitionSupport,
-    } = useSpeechRec();
+    } = useSpeechRecognition();
 
     
-    return <div>main</div>;
+    return (
+            
+        <div>
+            {hasRecognitionSupport ? (
+               
+               <>
+                <div>
+                    <button onClick={startListening}>Start rec</button>
+                </div>
+                {isListening ? <div>CURRENTLY LISTENING</div> : null}
+                </>
+            ): (
+                <h1>Has no speech recognition support </h1>
+            )}
+        </div>
+    )
 
 };
 

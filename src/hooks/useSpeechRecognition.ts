@@ -1,5 +1,5 @@
 import { useEffect,useState } from "react";
-const useSpeechRec = () => {};
+
 
 let recognition: any = null;
 
@@ -10,7 +10,7 @@ if('webkitSpeechRecognition' in window) {
 }
 
 
-const useSpeechRec = () => {
+const useSpeechRecognition = () => {
     const [text, setText] = useState('');
     const [isListening,SetisListening] = useState(false)
 
@@ -44,4 +44,5 @@ const useSpeechRec = () => {
 
 };
 
-export default useSpeechRec;
+export default useSpeechRecognition;
+
