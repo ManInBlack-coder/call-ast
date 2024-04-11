@@ -21,6 +21,7 @@ const Main = () => {
                     <button onClick={startListening}>Start rec</button>
                 </div>
                 {isListening ? <div>CURRENTLY LISTENING</div> : null}
+                {text}
                 </>
             ): (
                 <h1>Has no speech recognition support </h1>

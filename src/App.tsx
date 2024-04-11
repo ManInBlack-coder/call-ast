@@ -1,8 +1,14 @@
 import React from 'react';
 import Main from './components/Main';
+import Todo from './components/Todo';
 
 function App() {
-  return <Main/>;
+  return <div>
+
+    <Main/>
+    
+    <Todo/>
+  </div>;
 }
 
 export default App;

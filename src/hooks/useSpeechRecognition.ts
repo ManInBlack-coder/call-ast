@@ -19,6 +19,7 @@ const useSpeechRecognition = () => {
 
         recognition.onresult = (event: SpeechRecognitionEvent) => {
             console.log('onresult event :', event);
+            setText(event.results[0][0].transcript)
             recognition.stop();
             SetisListening(false);
         }
