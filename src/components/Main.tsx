@@ -23,7 +23,7 @@ const Main = () => {
                 {isListening ? <div>CURRENTLY LISTENING</div> : null}
                 {text}
                 </>
-            ): (
+            ): ( 
                 <h1>Has no speech recognition support </h1>
             )}
         </div>
