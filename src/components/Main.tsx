@@ -1,4 +1,5 @@
 import useSpeechRecognition from "../hooks/useSpeechRecognition";
+import React from "react";
 
 const Main = () => {
 
@@ -19,6 +20,10 @@ const Main = () => {
                <>
                 <div>
                     <button onClick={startListening}>Start rec</button>
+                </div>
+
+                <div>
+                    <button onClick={stopListening}>Stop rec</button>
                 </div>
                 {isListening ? <div>CURRENTLY LISTENING</div> : null}
                 {text}

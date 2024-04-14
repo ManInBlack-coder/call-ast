@@ -40,6 +40,8 @@ const useSpeechRecognition = () => {
         text, 
         isListening,
         startListening,
+        stopListening,
+
         hasRecognitionSupport: !! recognition,
     }
 
