@@ -11,6 +11,9 @@ const Main = () => {
         hasRecognitionSupport,
     } = useSpeechRecognition();
 
+    if (!isListening) {
+
+    }
     
     return (
             
@@ -21,14 +24,12 @@ const Main = () => {
                 <div>
                     <button onClick={startListening}>Start rec</button>
                 </div>
-                
 
-                
-                {isListening ? <div>
-                    <div>
+                <div>
                     <button onClick={stopListening}>Stop rec</button>
                 </div>
-                    CURRENTLY LISTENING</div> : null}
+                
+                {isListening ? <div>CURRENTLY LISTENING</div> : null}
                 {text}
                 </>
             ): ( 
