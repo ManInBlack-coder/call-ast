@@ -21,11 +21,14 @@ const Main = () => {
                 <div>
                     <button onClick={startListening}>Start rec</button>
                 </div>
+                
 
-                <div>
+                
+                {isListening ? <div>
+                    <div>
                     <button onClick={stopListening}>Stop rec</button>
                 </div>
-                {isListening ? <div>CURRENTLY LISTENING</div> : null}
+                    CURRENTLY LISTENING</div> : null}
                 {text}
                 </>
             ): ( 
