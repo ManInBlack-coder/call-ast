@@ -28,13 +28,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Sending Tasks to database
 //----
-app.post('/db', (req,res) => {
+app.post('/to_db', (req,res) => {
 
     const data_to_db = 'INSERT INTO tasks (Task) VALUES(?))';
     
-    const values = [req.body.text]
+    const values = req.body.text
 
-    db.query(data_to_db, [values],(err,data) => {
+    db.query(data_to_db, values,(err,data) => {
         if(err) {
             console.log(err)
             return res.json('Error')
