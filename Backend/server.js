@@ -1,36 +1,40 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors')
-
+const bodyParser = require('body-parser')
 
 const app = express();
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000','http://localhost:3001' ],
     methods: ['GET', 'POST'],
     credentials: true
 }))
 
-app.use(express.json())
 
-const db = mysql.createConnection({
 
-    host: 'localhost',
-    user: 'root',
-    password: 'qwerty',
-    //database: 'signup',   
-    database: 'CallAst'
-})
+    const db = mysql.createConnection({
+
+        host: 'localhost',
+        user: 'root',
+        password: 'qwerty',
+        //database: 'signup',   
+        database: 'CallAst'
+    })
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 
 
 // Sending Tasks to database
 //----
 app.post('/db', (req,res) => {
 
-    const sql = 'INSERT INTO tasks (Task) VALUES(?))';
+    const data_to_db = 'INSERT INTO tasks (Task) VALUES(?))';
     
     const values = [req.body.text]
 
-    db.query(sql, [values],(err,data) => {
+    db.query(data_to_db, [values],(err,data) => {
         if(err) {
             console.log(err)
             return res.json('Error')
@@ -41,11 +45,27 @@ app.post('/db', (req,res) => {
 })
 
 
+// Monitoring tasks from database 
+//----
+
+app.get('/db', (req,res) => {
+
+    const data_to_mon = 'SELECT Task from tasks';
+    
+    db.query(data_to_mon,(err,data)=> {
+        if(err) {
+            console.log(err)
+            return res.json('errooour')
+        }
+        return res.json({todos: data})
+    })
+
+})
+
 app.listen(8081, ()=> {
     console.log('server working on PORT 8081')
 })
 
 
-// Monitoring tasks from database 
-//----
+
 
