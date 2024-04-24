@@ -55,7 +55,7 @@ const Main = () => {
                     </div>
 
                     {isListening ? <div>CURRENTLY LISTENING</div> : null}
-                   
+                    {text}
                     {postData(text)}
                     </>
                 ): ( 

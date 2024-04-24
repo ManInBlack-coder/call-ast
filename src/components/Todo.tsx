@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import axios from 'axios';
 
 
+
+
 const Todo = () => {
 
     const [todos, setTodos] = useState([])
@@ -17,12 +19,27 @@ const Todo = () => {
     
     }, [])
 
+
+
+    const deleteTodo = async (id) => {
+        try {
+            const todoDelete = await axios.delete(`http://localhost:8081/delete/todo/${id}`);
+            
+            if (todoDelete.status === 200) {
+                console.log('Todo deleted successfully');
+            } 
+        } catch (error) {
+            console.error('Error deleting todo:', error);
+            
+
+        }
+    }
     
-    
-    
-    
-    
-    
+    console.log(todos)
+    todos.forEach(todo => {
+        console.log(todo)
+    });
+
     return (
         <div>
 
@@ -32,7 +49,8 @@ const Todo = () => {
                 <h2>TODO PART</h2>
                 <div>
                     {todos.map((todo: {Task: string}) => (
-                        <p>{todo.Task}</p>
+                        
+                        <p>{todo.Task} <button onClick={() => deleteTodo(todo.Task_id)}>Delete</button></p>
                     ))}
                 </div>
             </div>
