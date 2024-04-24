@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const app = express();
 app.use(cors({
     origin: ['http://localhost:3000','http://localhost:3001' ],
-    methods: ['GET', 'POST','DELETE'],
+    methods: ['GET', 'POST','DELETE','PATCH'],
     credentials: true
 }))
 
@@ -17,7 +17,6 @@ app.use(cors({
         host: 'localhost',
         user: 'root',
         password: 'qwerty',
-        //database: 'signup',   
         database: 'CallAst'
     })
 
@@ -43,6 +42,7 @@ app.post('/to_db', (req,res) => {
         return res.json(data)
     })
 })
+
 
 
 // Monitoring tasks from database 
@@ -80,6 +80,9 @@ app.delete('/delete/todo/:id', (req, res) => {
         return res.status(200).json({ message: 'Todo deleted successfully' });
     });
 });
+
+
+
 
 
 
