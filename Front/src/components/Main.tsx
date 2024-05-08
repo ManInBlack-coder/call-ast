@@ -1,9 +1,11 @@
+import { AnyTxtRecord } from "dns";
 import useSpeechRecognition from "../hooks/useSpeechRecognition";
 
 
 
 const Main = () => {
 
+   
     const {
         text,
         startListening,
@@ -12,6 +14,7 @@ const Main = () => {
         hasRecognitionSupport,
     } = useSpeechRecognition();
 
+    let situverd = 'situ verd'
  
     function postData(textData:any) {
     
@@ -28,14 +31,27 @@ const Main = () => {
             throw new Error('Network response was not ok');
         }
         return response.json();
+        
     })
     .then(data => {
         console.log('Data successfully sent:', data);
+        window.location.reload();
+
     })
     .catch(error => {
         console.error('Error sending data:', error);
-    });
+    }
+);
+
+
+
+
+
 }
+
+
+    
+
 
 
     
@@ -43,25 +59,35 @@ const Main = () => {
             
         <div>
             <form action="" >   
+                
+         
                 {hasRecognitionSupport ? (
                 
                    <>
                     <div>
                         <button onClick={startListening}>Start rec</button>
+                    
                     </div>
 
-                    <div>
+                    {/* <div>
                         <button onClick={stopListening}>Stop rec</button>
-                    </div>
-
+                    </div> */}
+                    
                     {isListening ? <div>CURRENTLY LISTENING</div> : null}
                     {text}
-                    {postData(text)}
+                    {/* {postData(text)} */}
+
+                  
                     </>
                 ): ( 
                     <h1>Has no speech recognition support </h1>
                 )}
+                
             </form> 
+            <div>
+                       
+                        <button onClick={() => postData(situverd)}>situverd</button>
+                    </div>
 
         </div>
     )

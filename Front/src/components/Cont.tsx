@@ -3,6 +3,8 @@ import Todo from "./Todo"
 import Main from "./Main"
 
 
+
+
 const Cont = () => {
 
 
@@ -13,6 +15,7 @@ const Cont = () => {
             <Main/>
         
             <Todo/>
+          
         </div>
     )
 

@@ -4,6 +4,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 
 const app = express();
+app.use(express.json());
 app.use(cors({
     origin: ['http://localhost:3000','http://localhost:3001' ],
     methods: ['GET', 'POST','DELETE','PATCH'],
@@ -27,22 +28,36 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Sending Tasks to database
 //----
-app.post('/to_db', (req,res) => {
+// app.post('/to_db', (req,res) => {
+//     const data_to_db = 'INSERT INTO tasks (Task) VALUES (?)';
+//     const values = req.body.text;
 
-    const data_to_db = 'INSERT INTO tasks (Task) VALUES(?))';
+//     db.query(data_to_db, values, (err,data) => {
+//         if(err) {
+//             console.log(err);
+//             return res.json('Error');
+//         }
+
+//         return res.json(data);
+//     });
+// });
+
+
+// Sending Tasks to database
+//----
+app.post('/to_db', (req, res) => {
+    const task = req.body.text; // Assuming task is the property containing the task text
+    const data_to_db = 'INSERT INTO tasks (Task) VALUES (?)';
     
-    const values = req.body.text
-
-    db.query(data_to_db, values,(err,data) => {
-        if(err) {
-            console.log(err)
-            return res.json('Error')
+    db.query(data_to_db, [task], (err, data) => {
+        if (err) {
+            console.error('Error inserting task:', err);
+            return res.status(500).json({ error: 'Internal server error' });
         }
 
-        return res.json(data)
-    })
-})
-
+        return res.status(200).json({ message: 'Task added successfully', data: data });
+    });
+});
 
 
 // Monitoring tasks from database 
