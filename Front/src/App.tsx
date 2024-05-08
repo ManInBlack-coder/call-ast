@@ -1,16 +1,33 @@
 import React from 'react';
+import { BrowserRouter, Routes,Route } from 'react-router-dom';
+// import Cont from './components/Cont';
+import Register from './components/register';
+import Login from './components/login';
 
 
-import Cont from './components/Cont';
 
-function App() {
-  return <div>
+const App: React.FC = () => {
+  return (
       
       
-      <Cont/> 
+      <BrowserRouter>
+        <Routes>
 
+          {/* <Route path='/home' element={<Cont />}/> */}
+
+          <Route path="/register" element={<Register />} />
+
+          <Route path="/" element={<Login />} />
+
+
+
+        </Routes>
+      </BrowserRouter>
+      
+      
+)
      
-  </div>;
+
 }
 
 export default App;
