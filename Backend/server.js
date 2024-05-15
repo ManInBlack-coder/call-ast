@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors')
 const bodyParser = require('body-parser')
-sessions = require('express-session')
+const sessions = require('express-session')
 
 
 const app = express();
@@ -13,25 +13,37 @@ app.use(cors({
     credentials: true
 }))
 
+
+const db = mysql.createConnection({
+
+    host: 'localhost',
+    user: 'root',
+    password: 'qwerty',
+    database: 'CallAst'
+})
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(sessions({
     secret: 'thisismysecretkey',
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 24 hours
     resave: false
 }))
 
 
+app.get('/', (req, res) => {
+    console.log('req.session.user', req.session.user)
+    if (req.session.user) {
+        res.json({ valid: true, email: req.session.user.email})
+        console.log('session tootab')
+    } else {
+        res.send({ valid: false })
+        // res.send('session unsuccesful')
+    } 
+})
 
-    const db = mysql.createConnection({
 
-        host: 'localhost',
-        user: 'root',
-        password: 'qwerty',
-        database: 'CallAst'
-    })
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 
 
 
@@ -101,14 +113,8 @@ app.delete('/delete/todo/:id', (req, res) => {
 
 
 
-app.get('/', (req, res) => {
-    if (req.session.user) {
-        res.json({ valid: true, email: req.session.user.email})
-    } else {
-        res.send({ valid: false })
-    } 
-})
 
+// Register 
 
 app.post('/register', (req, res) => {
     const { name, email, password } = req.body;
@@ -170,8 +176,11 @@ app.post('/login', (req,res) => {
         if(data.length > 0) {
             req.session.user = {
                 email: req.body.email,
+            
                 
             }
+
+            
             console.log(req.session.user)
             res.status(200).json({
                 message: 'User is logged in',

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Todo from "./Todo"
 import Main from "./Main"
+import { CookiesProvider, useCookies } from 'react-cookie'
 
 
 
@@ -11,23 +12,29 @@ const Cont = () => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [cookies, setCookie] = useCookies(['user'])
     
+    console.log(cookies)
+
     useEffect(() => {
         axios.get('http://localhost:8081/')
         .then(response => {
+            console.log(response.data)
             if (response.data.valid) {
                 setEmail(response.data.email);
+                setCookie('user', response.data.email, { path: '/' })
+              
                 
             } else {
-                navigate('/home');
+                navigate('/login');
             }
             console.log(response);
         })
         .catch(error => {
             if (error.response) {
-                console.log(error.response.data); // Log the error response data for better debugging
+                console.log(error.response.data); 
             } else {
-                console.log(error); // Log the error if it's not a server response error
+                console.log(error); 
             }
         });
     }, []);
@@ -35,7 +42,7 @@ const Cont = () => {
 
     return(
         <div>
-            <h1>Welcome  </h1>
+            <h1>Welcome {cookies.user} </h1>
             
             <Main/>
         
@@ -43,7 +50,7 @@ const Cont = () => {
           
         </div>
     )
-
+    
 };
 
 export default Cont

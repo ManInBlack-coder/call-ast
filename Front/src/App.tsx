@@ -1,28 +1,46 @@
-import React from 'react';
-import { BrowserRouter, Routes,Route } from 'react-router-dom';
-// import Cont from './components/Cont';
-import Register from './components/register';
+import React, { useEffect } from 'react';
+import {  Routes,Route,useNavigate } from 'react-router-dom';
+// import Cont from './components/cont';
+import RegistrationForm from './components/register';
+
 import Login from './components/login';
 
+import { CookiesProvider, useCookies } from 'react-cookie'
 
 
-const App: React.FC = () => {
+
+export const App: React.FC = () => {
+  const [cookies, setCookie] = useCookies(['user']);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (cookies.user) {
+      console.log('User cookie:', cookies.user);
+      // If user cookie exists, redirect to home or the protected route
+      navigate('/');
+    } else {
+      // If no user cookie, stay on the login page
+      navigate('/login');
+    }
+  }, [cookies, navigate]);
+
   return (
       
-      
-      <BrowserRouter>
+  
         <Routes>
 
-          {/* <Route path='/home' element={<Cont />}/> */}
+            {/* <Route path='/home' element={<Cont />}/> */}
 
-          <Route path="/register" element={<Register />} />
+         
 
           <Route path="/" element={<Login />} />
 
 
 
+
         </Routes>
-      </BrowserRouter>
+
+   
       
       
 )

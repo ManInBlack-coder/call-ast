@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import validateLoginForm from '../hooks/validation';
@@ -19,8 +19,17 @@ const Login: React.FC = () => {
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues(prev => ({ ...prev, [event.target.name]: event.target.value }));
+
+
+
+
     };
 
+   
+    axios.defaults.withCredentials = true
+   
+   
+   
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setErrors({}); // Clear previous errors
@@ -32,9 +41,13 @@ const Login: React.FC = () => {
             axios.post('http://localhost:8081/login', values)
                 .then(res => {
                     if (res.data.Login === true) {
+                      
+                        alert('logged in')
                         navigate('/');
                     } else {
                         alert('No such user');
+                        navigate('/login');
+
                     }
                 })
                 .catch(err => {
@@ -57,7 +70,7 @@ const Login: React.FC = () => {
                     {errors.password && <span>{errors.password}</span>}
                 </div>
                 <button type="submit">Login</button>
-                <Link to='/register' className='btn btn-create-account'>create account</Link>
+                <Link to='/RegistrationForm ' className='btn btn-create-account'>create account</Link>
             </form>
         </div>
     );
