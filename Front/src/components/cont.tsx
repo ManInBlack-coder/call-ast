@@ -12,7 +12,7 @@ const Cont = () => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [cookies, setCookie] = useCookies(['user'])
+    const [cookies, setCookie,removeCookie] = useCookies(['user'])
     
     console.log(cookies)
 
@@ -38,10 +38,23 @@ const Cont = () => {
             }
         });
     }, []);
-    
+
+    const handleLogout = () => {
+        removeCookie('user');
+        navigate('/');
+        window.location.reload();
+      };
+
+
+      
 
     return(
         <div>
+           
+           <div>
+
+            <button onClick={handleLogout}>lOGOUT</button>
+           </div>
             <h1>Welcome {cookies.user} </h1>
             
             <Main/>
