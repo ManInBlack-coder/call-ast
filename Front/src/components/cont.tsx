@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Todo from "./Todo"
 import Main from "./Main"
-import { CookiesProvider, useCookies } from 'react-cookie'
+import { useCookies } from 'react-cookie'
 
 
 
@@ -12,23 +12,26 @@ const Cont = () => {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [cookies, setCookie,removeCookie] = useCookies(['user'])
+    const [userID,setUserID] = useState('')
+    const [cookies, setCookie,removeCookie] = useCookies(['user','userID'])
     
-    console.log(cookies)
+    console.log('kupsised',cookies.userID)
 
     useEffect(() => {
         axios.get('http://localhost:8081/')
         .then(response => {
             console.log(response.data)
             if (response.data.valid) {
+                setUserID(response.data.userId);
                 setEmail(response.data.email);
-                setCookie('user', response.data.email, { path: '/' })
-              
+                setCookie('user', response.data.email, { path: '/' });
+                setCookie('userID', response.data.user_id, { path: '/' });
                 
             } else {
                 navigate('/login');
             }
-            console.log(response);
+            console.log('nimi',response.data.email);
+            console.log('id', response.data.user_id)
         })
         .catch(error => {
             if (error.response) {
@@ -39,14 +42,17 @@ const Cont = () => {
         });
     }, []);
 
+    
+
     const handleLogout = () => {
         removeCookie('user');
+        removeCookie('userID')
         navigate('/');
         window.location.reload();
       };
 
-
-      
+     
+    // console.log('cookie user',cookies.user)
 
     return(
         <div>
@@ -66,4 +72,4 @@ const Cont = () => {
     
 };
 
-export default Cont
+export default Cont;

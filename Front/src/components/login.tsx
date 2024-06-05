@@ -4,13 +4,14 @@ import axios from 'axios';
 import validateLoginForm from '../hooks/validation';
 
 interface LoginFormValues {
-    email: string;
+    name: string;
     password: string;
+    
 }
 
 const Login: React.FC = () => {
     const [values, setValues] = useState<LoginFormValues>({
-        email: '',
+        name: '',
         password: ''
     });
 
@@ -58,11 +59,12 @@ const Login: React.FC = () => {
 
     return (
         <div>
+            <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" name="email" value={values.email} onChange={handleInput} />
-                    {errors.email && <span>{errors.email}</span>}
+                    <label htmlFor="name">name</label>
+                    <input type="name" id="name" name="name" value={values.name} onChange={handleInput} />
+                    {errors.name && <span>{errors.name}</span>}
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
@@ -70,7 +72,7 @@ const Login: React.FC = () => {
                     {errors.password && <span>{errors.password}</span>}
                 </div>
                 <button type="submit">Login</button>
-                <Link to='/RegistrationForm ' className='btn btn-create-account'>create account</Link>
+                <Link to='/RegistrationForm' className='btn btn-create-account'>create account</Link>
             </form>
         </div>
     );

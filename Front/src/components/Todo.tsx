@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios';
-
+import { useCookies } from "react-cookie";
 
 
 
@@ -8,7 +8,12 @@ import axios from 'axios';
 const Todo = () => {
 
     const [todos, setTodos] = useState([])
+    const [cookies] = useCookies(['user'])
+ 
 
+
+
+    //votab backist 
     useEffect(() => {
         axios.get('http://localhost:8081/db')
         .then(response => {
@@ -39,6 +44,7 @@ const Todo = () => {
         }
     }
     
+
     console.log(todos)
     todos.forEach(todo => {
         console.log(todo)

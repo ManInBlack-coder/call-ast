@@ -9,6 +9,8 @@ interface FormValues {
     password: string;
 }
 
+
+
 const RegistrationForm: React.FC = () => {
     const [values, setValues] = useState<FormValues>({
         name: '',
@@ -27,8 +29,12 @@ const RegistrationForm: React.FC = () => {
         setValues(prevValues => ({ ...prevValues, [name]: value }));
     };
 
+    const navigate = useNavigate();
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
+        
+        
         // Validate form fields
         const validationErrors: FormValues = {
             name: values.name ? '' : 'Name is required',
@@ -40,9 +46,13 @@ const RegistrationForm: React.FC = () => {
         // Check if there are any validation errors
         if (Object.values(validationErrors).every(error => !error)) {
             try {
+                
+                
                 // Make POST request to server
                 const response = await axios.post('http://localhost:8081/register', values);
                 console.log('Response:', response.data);
+                alert('New user created');
+                navigate('/');
             
                 // Navigate to another page upon successful registration
                 // Example: history.push('/dashboard');
@@ -73,7 +83,7 @@ const RegistrationForm: React.FC = () => {
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
                     <button type='submit' className='btn btn-success'>Register</button>
-                    <Link to='/' className='btn btn-create-account'>Login</Link>
+                    <Link to='/login' className='btn btn-create-account'>Login</Link>
                 </form>
             </div>
         </div>

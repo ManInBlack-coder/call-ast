@@ -1,15 +1,16 @@
 interface LoginFormValues {
-    email: string;
+    name: string;
     password: string;
 }
 
 const validateLoginForm = (values: LoginFormValues) => {
     const errors: Partial<LoginFormValues> = {};
 
-    if (!values.email) {
-        errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-        errors.email = 'Email address is invalid';
+    // Validate 'name' as a username (e.g., must be at least 3 characters long)
+    if (!values.name) {
+        errors.name = 'Username is required';
+    } else if (values.name.length < 3) {
+        errors.name = 'Username must be at least 3 characters long';
     }
 
     if (!values.password) {
